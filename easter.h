@@ -14,7 +14,7 @@
 #if DEBUG
 #include <stdio.h>
 #define D(x) __FILE__":%d:%s:" x, __LINE__, __FUNCTION__
-#define P(x) do { printf(D(" "#x),x); } while (0)
+#define P(x) do { printf(D(" %s => %d\n"), #x, x); } while (0)
 #else
 #define D(x) x
 #define P(x) x
