@@ -11,6 +11,10 @@
 
 #include "easter.h"
 
+#define YEAR    ((((365UL*4+1)*25-1)*4+1)*86400/400)
+
+void process(int year);
+
 char *mn[] = {
     "march","april"
 };
@@ -18,9 +22,9 @@ char *mn[] = {
 int main(int argc, char **argv)
 {
     int i;
-    for (i = 1; i < argc; i++) {
+    if (argc > 1) for (i = 1; i < argc; i++) {
         int year;
-        int res, m, d;
+        int res;
         res = sscanf(argv[i], "%d", &year);
         if (res != 1) {
             fprintf(stderr,
@@ -29,15 +33,24 @@ int main(int argc, char **argv)
                     argv[i]);
             continue;
         } /* if */
-        d = easter(year);
-        m = (d > 31);
-        if (m) d -= 31;
-        printf(D(
-#if DEBUG
-                    " "
-#endif
-                    "easter(%d) = %s/%d\n"),
-                year, mn[m], d);
-    } /* for */
+        process(year);
+    } else {
+        process(time(NULL) / YEAR + 1970);
+    } /* if */
     return EXIT_SUCCESS;
 } /* main */
+
+void process(int year)
+{
+    int d, m;
+
+    d = easter(year);
+    m = (d > 31);
+    if (m) d -= 31;
+    printf(D(
+#if DEBUG
+                " "
+#endif
+                "easter(%d) = %s/%d\n"),
+            year, mn[m], d);
+} /* process */
