@@ -16,3 +16,4 @@ easter: $(easter_objs)
 	$(CC) $(LDFLAGS) -o $@ $(easter_objs) $(easter_libs)
 
 $(easter_objs): easter.h
+easter_test.o: easter_test.h
