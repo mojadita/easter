@@ -36,7 +36,10 @@ int main(int argc, char **argv)
         } /* if */
         process(year);
     } else {
-        process(time(NULL) / YEAR + 1970);
+		time_t now = time(NULL);
+		struct tm *now_local = localtime(&now);
+
+        process(now_local->tm_year + 1900);
     } /* if */
     return EXIT_SUCCESS;
 } /* main */
